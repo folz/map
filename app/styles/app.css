@@ -13,8 +13,20 @@ html, body, .ember-view, .full-height {
 }
 
 #logo{
-	margin:10px;
+	margin:10px 20px;
 }
+
+
+.searchCard{
+	border: 2px solid #9C9CA0;
+	border-radius: 15px;
+	height:300px;
+	width:90%;
+	margin:auto;
+	padding:20px;
+
+}
+
 
 .inline{
 	display: inline;
@@ -45,4 +57,10 @@ html, body, .ember-view, .full-height {
 
 .info {
 	margin:0px;
+}
+
+.hackathons:hover{
+	background-color:#B2ECEC;
+	-webkit-transition: all .5s ease; /* For Safari 3.1 to 6.0 */
+    transition: all .5s ease;
 }
