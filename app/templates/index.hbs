@@ -1,9 +1,9 @@
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid full-height">
+    <div class="row full-height">
         <div class="col-sm-2">
             {{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-10 full-height">
             {{#if selectedLocation}}
                 {{google-maps latitude=selectedLocation.latitude longitude=selectedLocation.longitude zoom="5" url=selectedLocation.url markers=model}}
             {{/if}}
