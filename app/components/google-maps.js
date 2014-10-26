@@ -38,15 +38,14 @@ export default Ember.Component.extend({
         });
 
         markers.forEach(function(marker) {
-
             var gMapsMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')),
+                position: new google.maps.LatLng(marker.event_location.coords.lat, marker.event_location.coords.lng),
                 map: map,
                 title: 'Title here.'
             });
 
-            var contentString = '<h1>' + marker.get('name') + '</h1><div><p><a href=' +
-                marker.get('url') + '>' + marker.get('name') + '</a></p></div>';
+            var contentString = '<h1>' + marker.event_name.text + '</h1><div><p><a href=' +
+                marker.event_name.href + '>' + marker.event_name.text + '</a></p></div>';
 
             var infoWindow = new google.maps.InfoWindow({
                 content: contentString

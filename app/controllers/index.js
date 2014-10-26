@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
     },
 
     stringDidUpdate: function() {
-        Ember.run.debounce(this, this.geocodeLocationString, 500);
+        Ember.run.debounce(this, this.geocodeLocationString, 750);
     }.observes('userLocationString'),
 
     geocodeLocationString: function() {

@@ -8,8 +8,6 @@
 
     <div class="row full-height">
         <div class="col-sm-3">
-            {{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
-            <br>
             <div class="searchCard">
                 <h4 class="bold">Find a Hackathon</h4>
                 <h5 class="fieldTitle">Location</h5>
@@ -41,8 +39,7 @@
             </div>
         </div>
         <div class="col-sm-9 full-height">
-            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model}}
-
+            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model.locations}}
         </div>
     </div>
 </div>
