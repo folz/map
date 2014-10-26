@@ -9,7 +9,7 @@ html, body, .ember-view, .full-height {
 
 .map-canvas {
     height: 100%;
-    width: 95%;
+    width: 100%;
 }
 
 #logo{
