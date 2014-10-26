@@ -11,6 +11,7 @@ export default Ember.Component.extend({
         };
 
         this.set('map', new google.maps.Map(container[0], options));
+        this.set('markerCache', []);
         this.setMarkers();
     }.on('didInsertElement'),
 
@@ -24,13 +25,21 @@ export default Ember.Component.extend({
 
     setMarkers: function() {
         var map = this.get('map'),
-            markers = this.get('markers');
+            markers = this.get('markers'),
+            markerCache = this.get('markerCache');
+
+        markerCache.forEach(function(marker) {
+            marker.setMap(null);
+        })
 
         markers.forEach(function(marker) {
-            new google.maps.Marker({
+            var gMapsMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')),
                 map: map
             });
+
+            markerCache.pushObject(gMapsMarker);
+
         }, this);
     }.observes('markers.@each.latitude', 'markers.@each.longitude')
 });
