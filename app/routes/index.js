@@ -7,7 +7,7 @@ export default Ember.Route.extend({
                 return {
                     locations: data.results.collection1,
                     weeks: data.results.collection2
-                }
+                };
             });
     }
 });
