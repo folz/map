@@ -13,6 +13,7 @@ export default Ember.Component.extend({
         this.set('map', new google.maps.Map(container[0], options));
         this.set('markerCache', []);
         this.setMarkers();
+
     }.on('didInsertElement'),
 
     coordinatesChanged: function() {
@@ -33,12 +34,25 @@ export default Ember.Component.extend({
         })
 
         markers.forEach(function(marker) {
+
             var gMapsMarker = new google.maps.Marker({
                 position: new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')),
-                map: map
+                map: map,
+                title: 'Title here.'
+            });
+
+            var contentString = '<h1>' + marker.get('name') + '</h1><div><p><a href='
+            + marker.get('url') + '>' + marker.get('name') + '</a></p></div>';
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
             });
 
             markerCache.pushObject(gMapsMarker);
+
+            google.maps.event.addListener(gMapsMarker, 'click', function() {
+                infoWindow.open(map,gMapsMarker);
+            });
 
         }, this);
     }.observes('markers.@each.latitude', 'markers.@each.longitude')
