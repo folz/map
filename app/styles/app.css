@@ -12,23 +12,8 @@ html, body, .ember-view, .full-height {
     width: 100%;
 }
 
-.bold {
-	font-weight: 600;
-	color:black;
-}
-
 #logo{
 	margin:10px;
-}
-
-.searchCard{
-	border: 1px solid #666666;
-	border-radius: 15px;
-	height:300px;
-	width:90%;
-	margin:auto;
-	padding:20px;
-
 }
 
 .inline{

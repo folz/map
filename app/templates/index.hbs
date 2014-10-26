@@ -2,34 +2,19 @@
     <div class="row full-height">
         <div class="col-sm-3 full-height">
             <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
-            <div class="searchCard">
-                <h4 class="bold">Find a Hackathon</h4>
-                <h5 class="fieldTitle">Location</h5>
-                <div class="inputField">
-                    {{input value=userLocationString}}
-                    <p>{{userLocationCoords}}</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">Find a Hackathon</div>
+                <div class="panel-body">
+                    <h5 class="fieldTitle">Location</h5>
+                    <div class="inputField">
+                        {{input value=userLocationString}}
+                        <p>{{userLocationCoords.lat}}, {{userLocationCoords.lng}}</p>
+                    </div>
                 </div>
-                <h5 class="fieldTitle inline">Radius</h5>
-                <h5 class="inline bold pull-right"> mi</h5>
-
-                <output class="bold inline pull-right" for=radius id=radiusValue>50</output>
-                <div id="slider">
-                    <input type=range min=50 max=2000 value=50 id=radius step=50 onchange="outputUpdate(value)">
-                    <script>
-                        function outputUpdate(rad) {
-                        document.querySelector('#radiusValue').value = rad;
-                    }
-                    </script>  
-                </div>
-
-
-                <h5 class="fieldTitle">Date</h5>
-
-
             </div>
 
             <div style="margin-top:15px;" class="searchCard">
-                <h4 class="bold">Routes</h4>
+                <h4>Routes</h4>
                 {{#each week in model.weeks}}
                     <div class="panel panel-default">
                         <ul class="list-group">

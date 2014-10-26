@@ -9,7 +9,7 @@ export default Ember.Component.extend({
         var container = this.$(".map-canvas");
 
         var options = {
-            center: new google.maps.LatLng(this.get('latitude'), this.get('longitude')),
+            center: new google.maps.LatLng(this.get('latitude') || "39.828175", this.get('longitude') || "-98.5795"),
             zoom: parseInt(this.get('zoom')),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             streetViewControl: false,
@@ -27,7 +27,7 @@ export default Ember.Component.extend({
         var map = this.get('map');
 
         if (map) {
-            map.setCenter(new google.maps.LatLng(this.get('latitude'), this.get('longitude')));
+            map.setCenter(new google.maps.LatLng(this.get('latitude') || "39.828175", this.get('longitude') || "-98.5795"));
         }
     }.observes('latitude', 'longitude'),
 

@@ -2,7 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     userLocationString: "",
-    userLocationCoords: {lat: "39.828175", lng: "-98.5795"},
+    userLocationCoords: {lat: null, lng: null},
 
     init: function() {
         this.set('geocoder', new google.maps.Geocoder());
