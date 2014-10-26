@@ -1,3 +1,5 @@
+/* global google */
+
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -7,10 +9,12 @@ export default Ember.Component.extend({
         var options = {
             center: new google.maps.LatLng(this.get('latitude'), this.get('longitude')),
             zoom: parseInt(this.get('zoom')),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false
         };
 
         this.set('map', new google.maps.Map(container[0], options));
+
         this.set('markerCache', []);
         this.setMarkers();
 
@@ -31,7 +35,7 @@ export default Ember.Component.extend({
 
         markerCache.forEach(function(marker) {
             marker.setMap(null);
-        })
+        });
 
         markers.forEach(function(marker) {
 
@@ -41,8 +45,8 @@ export default Ember.Component.extend({
                 title: 'Title here.'
             });
 
-            var contentString = '<h1>' + marker.get('name') + '</h1><div><p><a href='
-            + marker.get('url') + '>' + marker.get('name') + '</a></p></div>';
+            var contentString = '<h1>' + marker.get('name') + '</h1><div><p><a href=' +
+                marker.get('url') + '>' + marker.get('name') + '</a></p></div>';
 
             var infoWindow = new google.maps.InfoWindow({
                 content: contentString
