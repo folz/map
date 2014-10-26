@@ -1,13 +1,48 @@
 <div class="container-fluid full-height">
-    <div class="row full-height">
-        <div class="col-sm-2">
-            {{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
 
-            {{input value=userLocationString}}
-            <p>{{userLocationCoords}}</p>
+    <div class="header">
+    <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
+    </div>
+
+
+
+    <div class="row full-height">
+        <div class="col-sm-3">
+            {{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
+            <br>
+            <div class="searchCard">
+                <h4 class="bold">Find a Hackathon</h4>
+                <h5 class="fieldTitle">Location</h5>
+                <div class="inputField">
+                    {{input value=userLocationString}}
+                    <p>{{userLocationCoords}}</p>
+                </div>
+                <h5 class="fieldTitle inline">Radius</h5>
+                <h5 class="inline bold right"> mi</h5>
+
+                <output class="bold inline right" for=radius id=radiusValue>50</output> 
+                <div id="slider">
+                    <input type=range min=50 max=2000 value=50 id=radius step=50 onchange="outputUpdate(value)">
+                    <script>
+                        function outputUpdate(rad) {
+                        document.querySelector('#radiusValue').value = rad;
+                    }
+                    </script>  
+                </div>
+
+
+                <h5 class="fieldTitle">Date</h5>
+
+
+            </div>
+
+            <div style="margin-top:15px;" class="searchCard">
+                <h4 class="bold">Routes</h4>
+            </div>
         </div>
-        <div class="col-sm-10 full-height">
+        <div class="col-sm-9 full-height">
             {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model}}
+
         </div>
     </div>
 </div>
