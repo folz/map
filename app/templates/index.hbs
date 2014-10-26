@@ -1,6 +1,6 @@
 <div class="container-fluid full-height">
     <div class="row full-height">
-        <div class="col-sm-3 full-height">
+        <div class="col-sm-2 full-height">
             <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
             <div class="panel panel-default">
                 <div class="panel-heading">Find a Hackathon</div>
@@ -13,22 +13,22 @@
                 </div>
             </div>
 
-            <div style="margin-top:15px;" class="searchCard">
-                <h4>Routes</h4>
-                {{#each week in model.weeks}}
+            {{#each week in model.weeks}}
+                {{#if week.relative_time}}
                     <div class="panel panel-default">
+                        <div class="panel-heading">{{week.relative_time}}</div>
                         <ul class="list-group">
-                            {{#each event in week}}
+                            {{#each event in week.events}}
                                 <li class="list-group-item">
-                                    {{event}}
+                                    {{event.event_name.text}}
                                 </li>
                             {{/each}}
                         </ul>
                     </div>
-                {{/each}}
-            </div>
+                {{/if}}
+            {{/each}}
         </div>
-        <div class="col-sm-9 full-height">
+        <div class="col-sm-10 full-height">
             {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model.locations}}
         </div>
     </div>
