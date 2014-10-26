@@ -1,13 +1,7 @@
 <div class="container-fluid full-height">
-
-    <div class="header">
-    <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
-    </div>
-
-
-
     <div class="row full-height">
-        <div class="col-sm-3">
+        <div class="col-sm-3 full-height">
+            <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
             <div class="searchCard">
                 <h4 class="bold">Find a Hackathon</h4>
                 <h5 class="fieldTitle">Location</h5>
@@ -16,9 +10,9 @@
                     <p>{{userLocationCoords}}</p>
                 </div>
                 <h5 class="fieldTitle inline">Radius</h5>
-                <h5 class="inline bold right"> mi</h5>
+                <h5 class="inline bold pull-right"> mi</h5>
 
-                <output class="bold inline right" for=radius id=radiusValue>50</output> 
+                <output class="bold inline pull-right" for=radius id=radiusValue>50</output>
                 <div id="slider">
                     <input type=range min=50 max=2000 value=50 id=radius step=50 onchange="outputUpdate(value)">
                     <script>
@@ -36,6 +30,17 @@
 
             <div style="margin-top:15px;" class="searchCard">
                 <h4 class="bold">Routes</h4>
+                {{#each week in model.weeks}}
+                    <div class="panel panel-default">
+                        <ul class="list-group">
+                            {{#each event in week}}
+                                <li class="list-group-item">
+                                    {{event}}
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/each}}
             </div>
         </div>
         <div class="col-sm-9 full-height">
