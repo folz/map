@@ -47,8 +47,10 @@ export default Ember.Component.extend({
                 title: 'Title here.'
             });
 
-            var contentString = '<h1>' + marker.event_name.text + '</h1><div><p><a href=' +
-                marker.event_name.href + '>' + marker.event_name.text + '</a></p></div>';
+
+            var contentString = '<h1 class="cardHeader">' + marker.event_name.text + '</h1><div><p class="info">' + marker.event_location.text + '</p><p class="info">' + marker.event_date.text + '</p></div><a href=' +
+                marker.event_name.href + '><div class="siteButton">' + "Website" + '</div></a></p></div>';
+
 
             var infoWindow = new google.maps.InfoWindow({
                 content: contentString

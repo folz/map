@@ -9,7 +9,7 @@ html, body, .ember-view, .full-height {
 
 .map-canvas {
     height: 100%;
-    width: 100%;
+    width: 95%;
 }
 
 #logo{
@@ -20,3 +20,29 @@ html, body, .ember-view, .full-height {
 	display: inline;
 }
 
+.cardHeader {
+	font-size:24px;
+	margin:2px;
+}
+
+.siteButton{
+	border: 1px solid #666666;
+	border-radius: 7px;
+	padding:5px;
+	text-align:center;
+	color:black;
+	text-decoration:none;
+	-webkit-transition: all 0.5s ease 0.5s;  /* For Safari 3.1 to 6.0 */
+    transition: all 0.5s ease 0.5s;;
+    margin-top:5px;
+
+
+} .siteButton:hover {
+	background-color:#C2C2D6;
+	text-decoration:none;
+
+}
+
+.info {
+	margin:0px;
+}
