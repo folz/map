@@ -1,5 +1,12 @@
-{{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
-
-{{#if selectedLocation}}
-    {{google-maps latitude=selectedLocation.latitude longitude=selectedLocation.longitude zoom="5" markers=model}}
-{{/if}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            {{view Ember.Select content=model value=selectedLocation optionLabelPath="content.name"}}
+        </div>
+        <div class="col-sm-10">
+            {{#if selectedLocation}}
+                {{google-maps latitude=selectedLocation.latitude longitude=selectedLocation.longitude zoom="5" url=selectedLocation.url markers=model}}
+            {{/if}}
+        </div>
+    </div>
+</div>
