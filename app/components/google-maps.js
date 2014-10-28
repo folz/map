@@ -19,7 +19,7 @@ export default Ember.Component.extend({
         this.set('map', new google.maps.Map(container[0], options));
 
         this.set('markerCache', []);
-        this.setMarkers();
+        this._setMarkers();
 
     }.on('didInsertElement'),
 
@@ -31,7 +31,7 @@ export default Ember.Component.extend({
         }
     }.observes('latitude', 'longitude'),
 
-    setMarkers: function() {
+    _setMarkers: function() {
         var map = this.get('map'),
             markers = this.get('markers'),
             markerCache = this.get('markerCache');
