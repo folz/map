@@ -1,3 +1,5 @@
+/* global google */
+
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -15,8 +17,11 @@ export default Ember.Controller.extend({
     _geocodeLocationString: function() {
         var geocoder = this.get('geocoder');
         geocoder.geocode({address: this.get('userLocationString')}, function(results, status) {
-            console.log(results);
-            this.set('userLocationCoords', {lat: results[0].geometry.location.k, lng: results[0].geometry.location.B})
+            if (status === google.maps.GeocoderStatus.OK) {
+                this.set('userLocationCoords', {lat: results[0].geometry.location.k, lng: results[0].geometry.location.B});
+            } else {
+                console.log(results, status);
+            }
         }.bind(this));
     },
 
@@ -37,7 +42,7 @@ export default Ember.Controller.extend({
             origins: new google.maps.LatLng(currentCoords.lat, currentCoords.lng),
             destinations: locations
         }, function(response, status) {
-            if (status == google.maps.DistanceMatrixStatus.OK) {
+            if (status === google.maps.DistanceMatrixStatus.OK) {
                 var origins = response.originAddresses;
                 var destinations = response.destinationAddresses;
 
@@ -51,6 +56,8 @@ export default Ember.Controller.extend({
                         var to = destinations[j];
                     }
                 }
+            } else {
+                console.log(response, status);
             }
         });
     }.observes('userLocationCoords')

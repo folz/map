@@ -9,7 +9,7 @@ export default Ember.Route.extend({
             .then(function (data) {
                 return data.map(function(hackathon) {
                     return this.get('store').push(Hackathon, hackathon);
-                }, this)
+                }, this);
             }.bind(this));
     }
 });
