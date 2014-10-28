@@ -42,14 +42,15 @@ export default Ember.Component.extend({
 
         markers.forEach(function(marker) {
             var gMapsMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(marker.event_location.coords.lat, marker.event_location.coords.lng),
+                position: new google.maps.LatLng(marker.get('latitude'), marker.get('longitude')),
                 map: map,
                 title: 'Title here.'
             });
 
 
-            var contentString = '<h1 class="cardHeader">' + marker.event_name.text + '</h1><div><p class="info">' + marker.event_location.text + '</p><p class="info">' + marker.event_date.text + '</p></div><a href=' +
-                marker.event_name.href + ' target="_blank"><div class="siteButton">' + "Website" + '</div></a></p></div>';
+            var contentString = '<h1 class="cardHeader">' + marker.get('name') + '</h1><div><p class="info">' +
+                marker.get('city') + '</p><p class="info">' + marker.get('weekend') + '</p></div><a href=' +
+                marker.get('href') + ' target="_blank"><div class="siteButton">' + "Website" + '</div></a></p></div>';
 
 
             var infoWindow = new google.maps.InfoWindow({
@@ -59,7 +60,7 @@ export default Ember.Component.extend({
             markerCache.pushObject(gMapsMarker);
 
             google.maps.event.addListener(gMapsMarker, 'click', function() {
-                infoWindow.open(map,gMapsMarker);
+                infoWindow.open(map, gMapsMarker);
             });
 
         }, this);

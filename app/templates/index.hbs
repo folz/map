@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-
+{{!--
             {{#each week in model.weeks}}
                 {{#if week.relative_time}}
                     <div class="panel panel-default">
@@ -20,7 +20,7 @@
                         <ul class="list-group">
                             {{#each event in week.events}}
                                 <li class="list-group-item hackathons">
-                                    {{event.event_name.text}}
+                                    {{event.name}}
                                     <img style="float:right;" src="http://i62.tinypic.com/ndlk4x.png" alt="triangle">
                                 </li>
                             {{/each}}
@@ -29,9 +29,11 @@
                 {{/if}}
             {{/each}}
 
+--}}
+
         </div>
         <div class="col-sm-10 full-height">
-            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model.locations}}
+            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=model}}
         </div>
     </div>
 </div>
