@@ -7,5 +7,6 @@ export default DS.Model.extend({
     latitude: DS.attr('number'),
     longitude: DS.attr('number'),
     name: DS.attr('string'),
+    start: DS.attr('date'),
     weekend: DS.attr('date')
 });
