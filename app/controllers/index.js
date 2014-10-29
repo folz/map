@@ -1,4 +1,4 @@
-/* global google */
+/* global google, moment */
 
 import Ember from 'ember';
 
@@ -6,9 +6,35 @@ export default Ember.Controller.extend({
     userLocationString: "",
     userLocationCoords: {lat: null, lng: null},
 
-    init: function() {
+    initMapsServices: function() {
+        this.set('directionsRenderer', new google.maps.DirectionsRenderer());
         this.set('geocoder', new google.maps.Geocoder());
-    },
+    }.on('init'),
+
+    hackathonsByWeek: function() {
+        var hackathons = this.get('model');
+
+        var hackathonWeekMap = {};
+
+        hackathons.forEach(function(hackathon) {
+            var weekOfYear = moment(hackathon.get('start'), moment.ISO_8601).isoWeek();
+            if (hackathonWeekMap[weekOfYear]) {
+                hackathonWeekMap[weekOfYear].push(hackathon);
+            } else {
+                hackathonWeekMap[weekOfYear] = [hackathon];
+            }
+        }, this);
+
+        return Ember.keys(hackathonWeekMap).sort().map(function(week) {
+            var weekMoment = moment(week, "W WW");
+
+            return {
+                'hackathons': hackathonWeekMap[week],
+                'timestamp': weekMoment.format(),
+                'timeago': weekMoment.fromNow()
+            };
+        });
+    }.property('model'),
 
     locationDidUpdate: function() {
         Ember.run.debounce(this, this._geocodeLocationString, 750);
@@ -26,7 +52,7 @@ export default Ember.Controller.extend({
     },
 
     getDistances: function() {
-        var directionsDisplay = new google.maps.DirectionsRenderer();
+        var directionsDisplay = this.get('directionsRenderer');
         //var directionsService = new google.maps.DirectionsService();
         var currentCoords = this.get('userLocationCoords');
         var model = this.get('model');

@@ -13,7 +13,8 @@
     "ember-qunit-notifications": "^0.0.3",
     "ember-cli-test-loader": "rjackson/ember-cli-test-loader#0.0.2",
     "bootstrap": "~3.2.0",
-    "moment": "~2.8.3"
+    "moment": "~2.8.3",
+    "livestampjs": "~1.1.2"
   },
   "resolutions": {
     "ember": ">= 1.7.0"

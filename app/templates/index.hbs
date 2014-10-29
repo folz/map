@@ -12,24 +12,22 @@
                     </div>
                 </div>
             </div>
-{{!--
-            {{#each week in model.weeks}}
-                {{#if week.relative_time}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">{{week.relative_time}}</div>
-                        <ul class="list-group">
-                            {{#each event in week.events}}
-                                <li class="list-group-item hackathons">
-                                    {{event.name}}
-                                    <img style="float:right;" src="http://i62.tinypic.com/ndlk4x.png" alt="triangle">
-                                </li>
-                            {{/each}}
-                        </ul>
-                    </div>
-                {{/if}}
-            {{/each}}
 
---}}
+            {{#each weekList in hackathonsByWeek}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                    {{live-stamp timestamp=weekList.timestamp}}
+                    </div>
+                    <ul class="list-group">
+                        {{#each hackathon in weekList.hackathons}}
+                            <li class="list-group-item hackathons">
+                                {{hackathon.name}}
+                                <img style="float:right;" src="/assets/img/triangle.png" alt="triangle">
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            {{/each}}
 
         </div>
         <div class="col-sm-10 full-height">

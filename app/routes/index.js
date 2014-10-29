@@ -1,7 +1,7 @@
+/* global moment */
+
 import Ember from 'ember';
-
 import Hackathon from 'hhmap/models/hackathon';
-
 
 export default Ember.Route.extend({
     model: function() {
