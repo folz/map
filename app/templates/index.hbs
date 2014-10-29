@@ -22,7 +22,10 @@
                         {{#each hackathon in weekList.hackathons}}
                             <li class="list-group-item hackathons">
                                 {{hackathon.name}}
-                                <img style="float:right;" src="/assets/img/triangle.png" alt="triangle">
+                                <img class="pull-right" src="/assets/img/triangle.png" alt="triangle">
+                                {{#if hackathon.distance}}
+                                    <span class="pull-right">{{hackathon.distance}}</span>
+                                {{/if}}
                             </li>
                         {{/each}}
                     </ul>

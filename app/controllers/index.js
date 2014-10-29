@@ -8,6 +8,7 @@ export default Ember.Controller.extend({
 
     initMapsServices: function() {
         this.set('directionsRenderer', new google.maps.DirectionsRenderer());
+        this.set('distanceMatrix', new google.maps.DistanceMatrixService());
         this.set('geocoder', new google.maps.Geocoder());
     }.on('init'),
 
@@ -34,7 +35,7 @@ export default Ember.Controller.extend({
                 'timeago': weekMoment.fromNow()
             };
         });
-    }.property('model'),
+    }.property('model.@each'),
 
     locationDidUpdate: function() {
         Ember.run.debounce(this, this._geocodeLocationString, 750);
@@ -51,40 +52,35 @@ export default Ember.Controller.extend({
         }.bind(this));
     },
 
-    getDistances: function() {
-        var directionsDisplay = this.get('directionsRenderer');
-        //var directionsService = new google.maps.DirectionsService();
-        var currentCoords = this.get('userLocationCoords');
-        var model = this.get('model');
+    getDistancesFromUserLocation: function() {
+        var distanceMatrix = this.get('distanceMatrix'),
+            currentCoords = this.get('userLocationCoords');
 
-        directionsDisplay.setMap(this.get('map'));
-        directionsDisplay.setPanel(document.getElementById("routesBox"));
+        this.get('hackathonsByWeek').forEach(function(week) {
+            distanceMatrix.getDistanceMatrix({
+                origins: [new google.maps.LatLng(currentCoords.lat, currentCoords.lng)],
+                destinations: week.hackathons.map(function(hackathon) {
+                    return new google.maps.LatLng(hackathon.get('latitude'), hackathon.get('longitude'));
+                }),
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.IMPERIAL
+            }, function(response, status) {
+                if (status === google.maps.DistanceMatrixStatus.OK) {
+                    var distances = response.rows[0].elements;
 
-        var locations = model.locations;
-
-        var service = new google.maps.DistanceMatrixService();
-
-        service.getDistanceMatrix({
-            origins: new google.maps.LatLng(currentCoords.lat, currentCoords.lng),
-            destinations: locations
-        }, function(response, status) {
-            if (status === google.maps.DistanceMatrixStatus.OK) {
-                var origins = response.originAddresses;
-                var destinations = response.destinationAddresses;
-
-                for (var i = 0; i < origins.length; i++) {
-                    var results = response.rows[i].elements;
-                    for (var j = 0; j < results.length; j++) {
-                        var element = results[j];
-                        var distance = element.distance.text;
-                        var duration = element.duration.text;
-                        var from = origins[i];
-                        var to = destinations[j];
-                    }
+                    distances.forEach(function(distance, i) {
+                        var hackathon = week.hackathons[i];
+                        if (distance.status === google.maps.DistanceMatrixStatus.OK) {
+                            console.log("Distance to " + hackathon.get('name') + " is " + distance.distance.text);
+                            hackathon.set('distance', distance.distance.text);
+                        } else {
+                            console.log(distance, hackathon.get('name'));
+                        }
+                    });
+                } else {
+                    console.log(response, status);
                 }
-            } else {
-                console.log(response, status);
-            }
+            });
         });
     }.observes('userLocationCoords')
 
