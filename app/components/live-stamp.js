@@ -5,21 +5,18 @@ export default Ember.Component.extend({
         var timestamp = moment(this.get('timestamp'), moment.ISO_8601);
         var diff = timestamp.diff(moment(), 'weeks');
 
-        if (diff < 0) {
-            this.set('weeks', Math.abs(diff));
-            this.set('in_the_past', true);
-        } else if (diff > 0) {
-            this.set('weeks', diff);
-            this.set('in_the_future', true);
+        // TODO: use moment's relativeTime with weeks
+        // @see https://github.com/moment/moment/issues/2017
+        if (diff < -1) {
+            this.set('message', Math.abs(diff) + " weeks ago");
+        } else if (diff === -1) {
+            this.set('message', "1 week ago");
+        } else if (diff === 0) {
+            this.set('message', "This week");
+        } else if (diff === 1) {
+            this.set('message', "In 1 week");
         } else {
-            this.set('weeks', 0);
-            this.set('this_week', true);
+            this.set('message', "In " + Math.abs(diff) + " weeks");
         }
-    }.on('didInsertElement'),
-
-    weeksString: function() {
-        var weeks = this.get('weeks');
-
-        return (weeks > 1) ? "weeks" : "week";
-    }.property('weeks')
+    }.on('didInsertElement')
 });
