@@ -1,3 +1,5 @@
+/* global moment */
+
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -14,7 +16,7 @@ export default Ember.Component.extend({
         } else if (diff === 0) {
             this.set('message', "This week");
         } else if (diff === 1) {
-            this.set('message', "In 1 week");
+            this.set('message', "Next week");
         } else {
             this.set('message', "In " + Math.abs(diff) + " weeks");
         }
