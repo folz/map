@@ -32,8 +32,14 @@ export default Ember.Controller.extend({
             return {
                 'hackathons': hackathonWeekMap[week],
                 'timestamp': weekMoment.format(),
-                'timeago': weekMoment.fromNow()
+                'isUpcoming': (weekMoment.diff(moment(), 'weeks') >= 0)
             };
+        });
+    }.property('model.@each'),
+
+    upcomingHackathons: function() {
+        return this.get('model').filter(function(hackathon) {
+            return moment(hackathon.get('start'), moment.ISO_8601).diff(moment()) >= 0;
         });
     }.property('model.@each'),
 
@@ -83,22 +89,4 @@ export default Ember.Controller.extend({
             });
         });
     }.observes('userLocationCoords')
-
-    /*locations.forEach(function(location) {
-     var start = new google.maps.LatLng(currentCoords.lat, currentCoords.lng);
-     var end = new google.maps.LatLng(location.event_location.coords.lat, location.event_location.coords.lng);
-     var request = {
-     origin:start,
-     destination:end,
-     travelMode: google.maps.TravelMode.DRIVING
-     };
-
-     directionsService.route(request, function(result, status) {
-     if (status == google.maps.DirectionsStatus.OK) {
-     directionsDisplay.setDirections(result);
-     }
-     });
-
-     });*/
-
 });
