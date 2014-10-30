@@ -1,35 +1,35 @@
 <div class="container-fluid full-height">
     <div class="row full-height">
         <div class="col-sm-2 full-height">
-            <div class="panel">
-                <div class="panel-body">
-                    <h1>HH /map</h1>
-                    <hr />
-                    <h5 class="fieldTitle">Location</h5>
-                    <form role="form">
+            <form role="form">
+                <div class="panel">
+                    <div class="panel-body">
+                        <h1>HH /map</h1>
+                        <hr />
+                        <h5 class="fieldTitle">Location</h5>
                         <div class="form-group">
                             {{input class="form-control" value=userLocationString}}
                         </div>
-                    </form>
-                    {{#if userLocationCoords.lat}}
-                        <p>{{userLocationCoords.lat}}, {{userLocationCoords.lng}}</p>
-                    {{/if}}
+                        {{#if userLocationCoords.lat}}
+                            <p>{{userLocationCoords.lat}}, {{userLocationCoords.lng}}</p>
+                        {{/if}}
+                    </div>
                 </div>
-            </div>
 
-            <div class="panel-group" id="hackathon-weeks" role="tablist" aria-multiselectable="true">
-                {{#each weekList in hackathonsByWeek}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab">
-                            <h4 class="panel-title">
-                                {{#if weekList.isUpcoming}}
-                                    <a data-toggle="collapse" data-parent="#hackathon-weeks">
-                                        {{live-stamp timestamp=weekList.timestamp}}
-                                    </a>
-                                {{/if}}
-                            </h4>
-                        </div>
-                        {{#if weekList.isUpcoming}}
+                <div class="checkbox">
+                    <label>
+                        {{input type="checkbox" checked=onlyShowUpcoming}} Only show upcoming hackathons
+                    </label>
+                </div>
+
+                <div class="panel-group" id="hackathon-weeks" role="tablist">
+                    {{#each weekList in hackathonsByWeek}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" {{bind-attr id="htmlId"}}>
+                                <h4 class="panel-title">
+                                    {{live-stamp timestamp=weekList.timestamp}}
+                                </h4>
+                            </div>
                             <ul class="list-group">
                                 {{#each hackathon in weekList.hackathons}}
                                     <li class="list-group-item hackathons">
@@ -41,13 +41,13 @@
                                     </li>
                                 {{/each}}
                             </ul>
-                        {{/if}}
-                    </div>
-                {{/each}}
-            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </form>
         </div>
         <div class="col-sm-10 full-height">
-            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=upcomingHackathons}}
+            {{google-maps latitude=userLocationCoords.lat longitude=userLocationCoords.lng zoom="5" markers=hackathons}}
         </div>
     </div>
 </div>

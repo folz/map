@@ -5,6 +5,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
     userLocationString: "",
     userLocationCoords: {lat: null, lng: null},
+    onlyShowUpcoming: true,
 
     initMapsServices: function() {
         this.set('directionsRenderer', new google.maps.DirectionsRenderer());
@@ -12,10 +13,20 @@ export default Ember.Controller.extend({
         this.set('geocoder', new google.maps.Geocoder());
     }.on('init'),
 
+    hackathons: function() {
+        return this.get('model').filter(function(hackathon) {
+            return !this.get('onlyShowUpcoming') ||
+                moment(hackathon.get('start'), moment.ISO_8601).diff(moment()) >= 0;
+        }, this);
+    }.property('model.@each', 'onlyShowUpcoming'),
+
     hackathonsByWeek: function() {
-        var hackathons = this.get('model');
+        var hackathons = this.get('model'),
+            onlyShowUpcoming = this.get('onlyShowUpcoming');
 
         var hackathonWeekMap = {};
+
+        console.log(onlyShowUpcoming);
 
         hackathons.forEach(function(hackathon) {
             var weekOfYear = moment(hackathon.get('start'), moment.ISO_8601).isoWeek();
@@ -28,20 +39,22 @@ export default Ember.Controller.extend({
 
         return Ember.keys(hackathonWeekMap).sort().map(function(week) {
             var weekMoment = moment(week, "W WW");
+            var isUpcoming = (weekMoment.diff(moment(), 'weeks') >= 0);
+
+            if (onlyShowUpcoming && !isUpcoming) {
+                return null;
+            }
 
             return {
                 'hackathons': hackathonWeekMap[week],
                 'timestamp': weekMoment.format(),
-                'isUpcoming': (weekMoment.diff(moment(), 'weeks') >= 0)
+                'isUpcoming': isUpcoming,
+                'htmlId': ("week-" + week)
             };
+        }).filter(function(week) {
+            return week !== null;
         });
-    }.property('model.@each'),
-
-    upcomingHackathons: function() {
-        return this.get('model').filter(function(hackathon) {
-            return moment(hackathon.get('start'), moment.ISO_8601).diff(moment()) >= 0;
-        });
-    }.property('model.@each'),
+    }.property('model.@each', 'onlyShowUpcoming'),
 
     locationDidUpdate: function() {
         Ember.run.debounce(this, this._geocodeLocationString, 750);
