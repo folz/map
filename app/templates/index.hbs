@@ -1,15 +1,19 @@
 <div class="container-fluid full-height">
     <div class="row full-height">
         <div class="col-sm-2 full-height">
-            <img src="http://i57.tinypic.com/2gy7ec7.png" id="logo" alt="hhmaplogo">
-            <div class="panel panel-default">
-                <div class="panel-heading">Find a Hackathon</div>
+            <div class="panel">
                 <div class="panel-body">
+                    <h1>HH /map</h1>
+                    <hr />
                     <h5 class="fieldTitle">Location</h5>
-                    <div class="inputField">
-                        {{input value=userLocationString}}
+                    <form role="form">
+                        <div class="form-group">
+                            {{input class="form-control" value=userLocationString}}
+                        </div>
+                    </form>
+                    {{#if userLocationCoords.lat}}
                         <p>{{userLocationCoords.lat}}, {{userLocationCoords.lng}}</p>
-                    </div>
+                    {{/if}}
                 </div>
             </div>
 
