@@ -7,6 +7,10 @@ html, body, .ember-view, .full-height {
     padding: 0;
 }
 
+#hackathon-controls {
+	overflow-y: scroll;
+}
+
 .map-canvas {
     height: 100%;
     width: 100%;
