@@ -75,6 +75,10 @@ export default Ember.Controller.extend({
         var distanceMatrix = this.get('distanceMatrix'),
             currentCoords = this.get('userLocationCoords');
 
+        if (currentCoords.lat === null) {
+            return;
+        }
+
         this.get('hackathonsByWeek').forEach(function(week) {
             distanceMatrix.getDistanceMatrix({
                 origins: [new google.maps.LatLng(currentCoords.lat, currentCoords.lng)],
@@ -101,5 +105,5 @@ export default Ember.Controller.extend({
                 }
             });
         });
-    }.observes('userLocationCoords')
+    }.observes('userLocationCoords', 'onlyShowUpcoming')
 });
